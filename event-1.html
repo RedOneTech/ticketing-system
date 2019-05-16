@@ -105,14 +105,17 @@
 
   <br>
 
-  <!-- go to seating chart page button -->
+  <!-- go to seating chart page button  form post hidden-->
   <h4>
     <b>
       Buy Ticket
     </b>
   </h4>
   <br>
-  &nbsp;&nbsp;&nbsp;<a href="seating-chart.php" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">&nbsp;&nbsp;&nbsp;Select Seat&nbsp;&nbsp;&nbsp;</a>
+  <form action="seating-chart.php" method="get">
+    <input type="hidden" name="event" value="Event-1">
+    <button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;Select Seat&nbsp;&nbsp;&nbsp;</button>
+  </form>
 
 
 <!-- Footer -->
