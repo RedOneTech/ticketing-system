@@ -75,21 +75,49 @@
       <table border="1">
         <?php 
           if(isset($row)){
-            for($i=1;$i<=$row;$i++){
-              echo'<tr>';
+            $rowname = 'A';
+            for($y=1;$y<=$row;$y++){
+              echo'
+              <tr>';
               for($x=1;$x<=$column;$x++){
-                echo'<td>';
-                echo' <img src="images/seat-available.png" alt="available" height="42" width="42"> ';
+                echo'
+                <td>';
+                $onclickfunction="seat('".$rowname."".$x."')";
+                echo' <img src="images/seat-available.png" alt="available" height="42" width="42" onclick="'.$onclickfunction.'"> ';
                 echo'</td>';
               }
-              echo'</tr>';
+              $rowname++;
+              echo'
+              </tr>';
             } 
           }
         ?>
     
       </table>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-bottom">
+    <div class="container">
+      <div class="col">
+     <a class="navbar-brand">Selected Seat :</a>
+     <a class="navbar-brand" id="selected-seat"></a>
+   </div>
+   <div class="col">
+      <button type="button" class="btn btn-warning btn-lg">Checkout</button>
+    </div>
+</nav>
+
+    <br><br><br><br>
     </div>
     </center>
+
+    <!-- selected seat script -->
+    <script>
+    function seat(seatnumberselect){
+    document.getElementById("selected-seat").innerHTML = seatnumberselect;
+  }
+    </script>
+
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
