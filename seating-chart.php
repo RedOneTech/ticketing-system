@@ -77,9 +77,14 @@
         <?php 
           if(isset($row)){
             $rowname = 'A';
+            echo'<tr><td></td>';
+            for($x=1;$x<=$column;$x++){
+              echo'<td><center><h4><strong>'.$x.'</strong><h4></center></td>';
+            }
+            echo'</tr>';
             for($y=1;$y<=$row;$y++){
               echo'
-              <tr>';
+              <tr><td><h4><strong>'.$rowname.'</strong></h4></td>';
               for($x=1;$x<=$column;$x++){
                 $sqlcheck = 'SELECT seat_number FROM '.$ordertable.' WHERE seat_number LIKE "%'.$rowname.''.$x.'%"';  
                $resultcheck = mysqli_query($conn, $sqlcheck);
