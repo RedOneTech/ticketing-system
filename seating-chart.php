@@ -116,6 +116,7 @@
 
      if(seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=seatnumberselect){
       var seatnumberselectmem = seatnumberselectmem.replace(","+seatnumberselect, "");
+      var seatnumberselectmem = seatnumberselectmem.replace(seatnumberselect+",", "");
       document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
       document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
      }
