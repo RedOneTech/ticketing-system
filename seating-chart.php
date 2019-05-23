@@ -38,7 +38,7 @@
           }
 
           $eventname=$_GET['event'];
-          $sql = 'SELECT column_number, row_number FROM seating_event_info WHERE event_name="'.$eventname.'"';
+          $sql = 'SELECT column_number, row_number, order_log_table FROM seating_event_info WHERE event_name="'.$eventname.'"';
           $result = mysqli_query($conn, $sql);
           $rowresult=mysqli_fetch_assoc($result);
 
@@ -56,6 +56,7 @@
             ';
             $column=$rowresult['column_number'];
             $row=$rowresult['row_number'];
+            $ordertable=$rowresult['order_log_table'];
           }
           else{
             echo'
@@ -65,8 +66,6 @@
                </div>
             ';
           }
-
-          mysqli_close($conn); 
           ?>
     <!-- event name and slog -->
     
@@ -82,17 +81,27 @@
               echo'
               <tr>';
               for($x=1;$x<=$column;$x++){
+                $sqlcheck = 'SELECT seat_number FROM '.$ordertable.' WHERE seat_number LIKE "%'.$rowname.''.$x.'%"';  
+               $resultcheck = mysqli_query($conn, $sqlcheck);
                 echo'
                 <td>';
+                if(mysqli_num_rows($resultcheck)==0){
                 $onclickfunction="seat('".$rowname."".$x."')";
-                echo' <img src="images/seat-available.png" alt="available" height="42" width="42" onclick="'.$onclickfunction.'" id="seat'.$rowname.''.$x.'"> ';
+                echo' <img src="images/seat-available.png" alt="available" height="35" width="35" onclick="'.$onclickfunction.'" id="seat'.$rowname.''.$x.'"> ';
                 echo'</td>';
+                }
+
+                if(mysqli_num_rows($resultcheck)==1){
+                  echo' <img src="images/seat-booked.png" alt="booked" height="35" width="35"> ';
+                  echo'</td>';
+                }
               }
               $rowname++;
               echo'
               </tr>';
             } 
           }
+          mysqli_close($conn); 
         ?>
     
       </table>
@@ -106,7 +115,7 @@
      <a class="navbar-brand" id="selected-seat"></a>
    </div>
    <div class="col">
-      <button type="button" class="btn btn-warning btn-lg">Checkout</button>
+      <button type="button" class="btn btn-warning btn-lg" >Checkout</button>
     </div>
 </nav>
 
