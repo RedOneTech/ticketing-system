@@ -83,7 +83,7 @@
                 echo'
                 <td>';
                 $onclickfunction="seat('".$rowname."".$x."')";
-                echo' <img src="images/seat-available.png" alt="available" height="42" width="42" onclick="'.$onclickfunction.'"> ';
+                echo' <img src="images/seat-available.png" alt="available" height="42" width="42" onclick="'.$onclickfunction.'" id="seat'.$rowname.''.$x.'"> ';
                 echo'</td>';
               }
               $rowname++;
@@ -110,10 +110,36 @@
     </center>
 
     <!-- selected seat script -->
-    <script>
+    <script>  
     function seat(seatnumberselect){
-    document.getElementById("selected-seat").innerHTML = seatnumberselect;
-  }
+     var seatnumberselectmem= document.getElementById("selected-seat").innerHTML;
+
+     if(seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=seatnumberselect){
+      var seatnumberselectmem = seatnumberselectmem.replace(","+seatnumberselect, "");
+      document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+      document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
+     }
+
+     else if(seatnumberselectmem==seatnumberselect){
+      var seatnumberselectmem = seatnumberselectmem.replace(seatnumberselect, "");
+      document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+      document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
+     }
+
+     else if(!seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=""){
+      var seatnumberselectmem = seatnumberselectmem+","+seatnumberselect;
+      document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+      document.getElementById("seat"+seatnumberselect).src = "images/seat-selected.png";
+     }
+
+     else if(!seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem==""){
+      var seatnumberselectmem = seatnumberselect;
+      document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+      document.getElementById("seat"+seatnumberselect).src = "images/seat-selected.png";
+     }
+    }
+     
+  
     </script>
 
 
