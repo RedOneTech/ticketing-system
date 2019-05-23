@@ -17,6 +17,8 @@
   </head>
   <body>
     <div class="container">
+
+      
     <!-- php get POST data -->
     <?php 
           $servername = "localhost";
@@ -94,6 +96,9 @@
         ?>
     
       </table>
+      <div class="alert alert-danger invisible" role="alert" id="alert">
+        
+      </div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-bottom">
     <div class="container">
       <div class="col">
@@ -112,33 +117,39 @@
     <!-- selected seat script -->
     <script>  
     function seat(seatnumberselect){
+    document.getElementById("alert").className= "alert alert-danger invisible";
      var seatnumberselectmem= document.getElementById("selected-seat").innerHTML;
+       if(seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=seatnumberselect){
+        var seatnumberselectmem = seatnumberselectmem.replace(","+seatnumberselect, "");
+        var seatnumberselectmem = seatnumberselectmem.replace(seatnumberselect+",", "");
+        document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+        document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
+       }
 
-     if(seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=seatnumberselect){
-      var seatnumberselectmem = seatnumberselectmem.replace(","+seatnumberselect, "");
-      var seatnumberselectmem = seatnumberselectmem.replace(seatnumberselect+",", "");
-      document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
-      document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
+       else if(seatnumberselectmem==seatnumberselect){
+        var seatnumberselectmem = seatnumberselectmem.replace(seatnumberselect, "");
+        document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+        document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
      }
 
-     else if(seatnumberselectmem==seatnumberselect){
-      var seatnumberselectmem = seatnumberselectmem.replace(seatnumberselect, "");
-      document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
-      document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
-     }
+     else if (seatnumberselectmem.length<=11){
+       if(!seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=""){
+        var seatnumberselectmem = seatnumberselectmem+","+seatnumberselect;
+        document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+        document.getElementById("seat"+seatnumberselect).src = "images/seat-selected.png";
+       }
 
-     else if(!seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=""){
-      var seatnumberselectmem = seatnumberselectmem+","+seatnumberselect;
-      document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
-      document.getElementById("seat"+seatnumberselect).src = "images/seat-selected.png";
-     }
-
-     else if(!seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem==""){
-      var seatnumberselectmem = seatnumberselect;
-      document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
-      document.getElementById("seat"+seatnumberselect).src = "images/seat-selected.png";
-     }
+       else if(!seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem==""){
+        var seatnumberselectmem = seatnumberselect;
+        document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+        document.getElementById("seat"+seatnumberselect).src = "images/seat-selected.png";
+       }
+      }
+    else if ( seatnumberselectmem.length>=14 && !seatnumberselectmem.includes(seatnumberselect)){
+      document.getElementById("alert").innerHTML="Telah mencapai maksimum kursi yang dapat dipilih";
+      document.getElementById("alert").className= "alert alert-danger visible";
     }
+  }
      
   
     </script>
