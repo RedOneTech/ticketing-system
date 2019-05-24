@@ -125,12 +125,20 @@
    <div class="col-6">
    </div>
    <div class="col-2">
-      <button type="button" class="btn btn-warning btn-lg" >Checkout</button>
+      <button type="button" class="btn btn-warning btn-lg" onclick="submitform()">Checkout</button>
     </div>
   </div>
 </nav>
 
     <br><br><br><br>
+
+    <form action="checkout" method="post" id="checkout">
+    <input type="hidden" name="seat1" value="" id="seat1"></input>
+    <input type="hidden" name="seat2" value="" id="seat2"></input>
+    <input type="hidden" name="seat3" value="" id="seat3"></input>
+    <input type="hidden" name="seat4" value="" id="seat4"></input>
+    <input type="hidden" name="seat5" value="" id="seat5"></input>
+  </form>
     </div>
     
 
@@ -138,6 +146,11 @@
     <script>  
     var seatnumbercount = 0 ;
     var seatnumberselectmem = [];
+    for ( var i = 1; i<=5;i++){
+      document.getElementById("seat"+i).value="";
+      document.getElementById("seat"+i).removeAttribute("disabled");
+    }
+
     function seat(seatnumberselect){
     document.getElementById("alert").className= "alert alert-danger invisible";
        if(this.seatnumberselectmem.includes(seatnumberselect)){
@@ -166,7 +179,19 @@
       document.getElementById("alert").className= "alert alert-danger visible";
     }
   }
-     
+
+  function submitform(){
+    for(var i = 1 ; i<= this.seatnumberselectmem.length;i++){
+      document.getElementById("seat"+i).value=this.seatnumberselectmem[i-1];
+      document.getElementById("seat"+i).removeAttribute("disabled");
+     }
+     for(var i = this.seatnumberselectmem.length+1 ; i<= 5;i++){
+      document.getElementById("seat"+i).setAttribute("disabled","");
+      document.getElementById("seat"+i).value="";
+     }
+    document.getElementById("checkout").submit();
+    
+    }
   
     </script>
 
