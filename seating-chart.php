@@ -7,6 +7,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="fontawesome/css/all.css" rel="stylesheet">
+    <script defer src="fontawesome/js/all.js"></script>
     <style type="text/css">
       .carousel-rounded{
         border-radius:1rem !important;
@@ -110,56 +112,56 @@
         ?>
     
       </table>
+
       <div class="alert alert-danger invisible" role="alert" id="alert">
-        
       </div>
+      </center>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-bottom">
     <div class="container">
-      <div class="col">
+      <div class="col-4">
      <a class="navbar-brand">Selected Seat :</a>
      <a class="navbar-brand" id="selected-seat"></a>
    </div>
-   <div class="col">
+   <div class="col-6">
+   </div>
+   <div class="col-2">
       <button type="button" class="btn btn-warning btn-lg" >Checkout</button>
     </div>
+  </div>
 </nav>
 
     <br><br><br><br>
     </div>
-    </center>
+    
 
     <!-- selected seat script -->
     <script>  
+    var seatnumbercount = 0 ;
+    var seatnumberselectmem = [];
     function seat(seatnumberselect){
     document.getElementById("alert").className= "alert alert-danger invisible";
-     var seatnumberselectmem= document.getElementById("selected-seat").innerHTML;
-       if(seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=seatnumberselect){
-        var seatnumberselectmem = seatnumberselectmem.replace(","+seatnumberselect, "");
-        var seatnumberselectmem = seatnumberselectmem.replace(seatnumberselect+",", "");
-        document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+       if(this.seatnumberselectmem.includes(seatnumberselect)){
+        for( var i = 0; i < this.seatnumberselectmem.length; i++){ 
+           if ( this.seatnumberselectmem[i] == seatnumberselect) {
+            var seatnumberselecttmp = this.seatnumberselectmem;
+            seatnumberselecttmp.splice(i, 1);
+             seatnumberselectmem= seatnumberselecttmp; 
+           }
+        }
+        seatnumbercount = this.seatnumbercount-1;
+        document.getElementById("selected-seat").innerHTML=this.seatnumberselectmem.join();
         document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
        }
 
-       else if(seatnumberselectmem==seatnumberselect){
-        var seatnumberselectmem = seatnumberselectmem.replace(seatnumberselect, "");
-        document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
-        document.getElementById("seat"+seatnumberselect).src = "images/seat-available.png";
-     }
-
-     else if (seatnumberselectmem.length<=11){
-       if(!seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem!=""){
-        var seatnumberselectmem = seatnumberselectmem+","+seatnumberselect;
-        document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
-        document.getElementById("seat"+seatnumberselect).src = "images/seat-selected.png";
-       }
-
-       else if(!seatnumberselectmem.includes(seatnumberselect) && seatnumberselectmem==""){
-        var seatnumberselectmem = seatnumberselect;
-        document.getElementById("selected-seat").innerHTML=seatnumberselectmem;
+     else if (this.seatnumbercount<5){
+       if(!this.seatnumberselectmem.includes(seatnumberselect)){
+        seatnumbercount = this.seatnumbercount+1;
+        seatnumberselectmem.push(seatnumberselect);
+        document.getElementById("selected-seat").innerHTML=this.seatnumberselectmem.join();
         document.getElementById("seat"+seatnumberselect).src = "images/seat-selected.png";
        }
       }
-    else if ( seatnumberselectmem.length>=14 && !seatnumberselectmem.includes(seatnumberselect)){
+    else if ( seatnumbercount==5 && !this.seatnumberselectmem.includes(seatnumberselect)){
       document.getElementById("alert").innerHTML="Telah mencapai maksimum kursi yang dapat dipilih";
       document.getElementById("alert").className= "alert alert-danger visible";
     }
